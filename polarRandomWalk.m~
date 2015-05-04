@@ -1,0 +1,15 @@
+numIterations = 10;
+x = 0;
+y = 0;
+figure;
+while(numIterations>0)
+    randomDirection = randomDouble(2pi);
+    randomLength = 1; %randomInt(2);
+    x1 = randomLength*cos(randomDirection/2*pi);
+    y1 = randomLength*sin(randomDirection/2*pi);
+    %r = sqrt(x1*x1 +y1*y1);
+    line([x, x1], [y, y1]);
+    x = x1;
+    y = y1;
+    numIterations = numIterations -1;
+end

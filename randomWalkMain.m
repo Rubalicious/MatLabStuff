@@ -1,4 +1,4 @@
-numIterations = 10000;
+numIterations = 5000;
 x = 0;
 y = 0;
 while(numIterations>0)
