@@ -1,10 +1,9 @@
 numIterations = 10000;
 x = [0]; % list of n-x starting coordinates
 y = [0]; % list of n-y starting coordinates
-color = []; % list of n-colour starting coordinates
-            % use colorSpec to generate colors
+color = []; % list of n-colour start
 figure
-plot(x,y,'r--'); % put [r g b]
+plot(x,y,'r--');
 
 disp('Press ^C to stop animation');
 

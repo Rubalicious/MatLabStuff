@@ -3,7 +3,7 @@ x = 0;
 y = 0;
 while(numIterations>0)
     randomDirection = randomInt(4);
-
+%try not to U-turn
     if(randomDirection == 0)
         line([x, x], [y+1, y]);
         y = y+1;
@@ -19,6 +19,7 @@ while(numIterations>0)
      if(randomDirection == 3)
         line([x-1, x], [y, y]);
         x = x-1;
-    end
+     end
+    pause(0.001);
     numIterations = numIterations -1;
 end
