@@ -3,7 +3,7 @@ x = 0;
 y = 0;
 while(numIterations>0)
     randomDirection = randomInt(4);
-%try not to U-turn
+%try: not to U-turn
     if(randomDirection == 0)
         line([x, x], [y+1, y]);
         y = y+1;
