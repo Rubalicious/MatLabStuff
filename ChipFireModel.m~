@@ -73,4 +73,5 @@ disp(['Number of spanning trees is ' num2str(complexity)])
 %% Creating a grid network
 
 %To create a grid network
-%plotsom(gridtop(n,m)), where nxm are dimensions of the grip
+%plotsom(gridtop(n,m))
+% grid = 
