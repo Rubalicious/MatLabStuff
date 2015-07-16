@@ -1,0 +1,22 @@
+function [ M ] = grid( rows, cols )
+
+%making an mxn matrix
+n = rows*cols;
+M = zeros(n);
+for r = 1:n
+    for c = r:n
+        %making the inner diagonals
+        if r + 1 == c
+            M(r, c) = 1;
+            M(c, r) = 1;
+        end
+        %making the outer diagonals
+        if r+cols == c
+            M(r,c) = 1;
+            M(c,r) = 1;
+        end
+    end
+end
+
+end
+

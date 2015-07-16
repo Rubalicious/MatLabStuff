@@ -1,32 +1,38 @@
 function [ M ] = grid( rows, cols )
 
-% def make_matrix(rows, cols):
-%     n = rows*cols
-%     M = matrix(n,n)
-%     for r in xrange(rows):
-%         for c in xrange(cols):
-%             i = r*cols + c
-%             # Two inner diagonals
-%             if c > 0: M[i-1,i] = M[i,i-1] = 1
-%             # Two outer diagonals
-%             if r > 0: M[i-cols,i] = M[i,i-cols] = 1
-
 %making an mxn matrix
 n = rows*cols;
-M = zeros(n,n);
-for r = 1:rows
-    for c = 1:cols
-        i = r*cols+c;
+M = zeros(n);
+for r = 1:n
+    for c = r:n
         %making the inner diagonals
-        if c > 0
-            M(i-1, i) = 1;
-            M(i, i-1) = 1;
+        if r + 1 == c
+            M(r, c) = 1;
+            M(c, r) = 1;
+        end
+        %remove 1's along diagonal
+        if mod(c,cols) == 0
+            M(r,c) = 0;
+            M(c,r) = 0;
         end
         %making the outer diagonals
-        if r > 0
-            M(i-cols, i) = 1;
-            M(i, i-cols) = 1;
+        if c-r == cols
+            M(r,c) = 1;
+            M(c,r) = 1;
         end
+        
+        %removing and reattaching the last node
+        if c == n
+            %remove the last node
+            M(c,:) = zeros(1,n);
+            M(:,c) = zeros(n,1);
+            %attaching the last node in the correct spot
+            M(c,1) = 1;
+            M(1,c) = 1;
+            M(c, cols) = 1;
+            M(cols, c) = 1;
+        end
+        
     end
 end
 
