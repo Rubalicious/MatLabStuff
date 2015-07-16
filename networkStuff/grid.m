@@ -33,6 +33,10 @@ for r = 1:n
             M(cols, c) = 1;
         end
         
+        %in the case of having a row vector
+        if rows == 1 && M(cols,cols) == 1
+            M(cols,cols) = 0;
+        end
     end
 end
 
