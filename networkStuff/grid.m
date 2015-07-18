@@ -1,4 +1,16 @@
-function [ M ] = grid( rows, cols )
+function [ M ] = grid( rows, varargin )
+
+if nargin > 2
+    error('Too many parameters')
+end
+
+switch nargin
+    case 1
+        %default values
+        cols = rows;
+    case 2
+        cols = cell2mat(varargin);
+end
 
 %making an mxn matrix
 n = rows*cols;

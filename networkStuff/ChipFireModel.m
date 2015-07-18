@@ -28,15 +28,13 @@ for step = 1:steps
     end
 end
 
-%% Generating a random network and Creating the graph Laplacian
-n = 10; %size of network
-p = 0.3; %probability
-%should generate an Erdos-Renyi random graph
-% found a function
-%generate a watts and strogatz model
-%make an adjacency matrix
-adj = makenetwork(n,p); 
-adj = adj-eye(length(adj));
+%% Generating a random network
+n = 80; %size of network
+p = 0.1; %probability
+%made my own Erdos-Renyi network
+adj = G(n,p);
+
+%% Creating the graph Laplacian
 %extrapolate a degree matrix
 deg = zeros(n);
 for row = 1:n
@@ -60,7 +58,7 @@ while counter < 500
         break
     end
     C_0 = C_1;
-    counter = counter+1
+    counter = counter+1;
 end
 %need to make one node a sink
 %this means that the chip count at this node
@@ -72,5 +70,47 @@ disp(['Number of spanning trees is ' num2str(complexity)])
 
 %% Creating a grid network
 
-%To create a grid network
-%plotsom(gridtop(n,m)), where nxm are dimensions of the grip
+%created my own grid network
+grid_plane = grid(100);
+L = graph_Laplacian(grid_plane);
+
+%% Initializing the grid
+
+% C_0 = randi(8,length(grid_plane),1);
+% e = fireVector(C_0, L);
+
+%% Making a proper initial condition
+n = length(grid_plane);
+C_0 = round(10*randn(n,1)+n/2);
+%% Run simulation
+n = length(grid_plane);
+e = fireVector(C_0, L);
+colors = colorNodes(e);
+
+h = figure;
+g = graph(grid_plane);
+p = plot(g,'NodeColor',colors);
+%%
+hold on
+% updateGrid(h,e);
+counter = 1;
+while counter < 101
+    colors = colorNodes(C_0);
+    p.NodeColor = colors;
+    p.EdgeColor = [0 1 0];
+    p.LineStyle = ':';
+    %making the first node's chips number 0
+    C_0(1) = 0; %the sink
+    
+    C_1 = C_0-L'*e;
+    e = fireVector(C_0, L);
+    if C_1 == C_0
+        break
+    end
+    C_0 = C_1;
+    disp(counter);
+    counter = counter+1;
+%     pause(1)
+end
+
+hold off
