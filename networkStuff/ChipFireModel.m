@@ -28,19 +28,19 @@ for step = 1:steps
     end
 end
 
-%% Generating a random network
+%% Generating a random network: Making the ADJ matrix
 n = 80; %size of network
 p = 0.1; %probability
 %made my own Erdos-Renyi network
 adj = G(n,p);
 
-%% Creating the graph Laplacian
+%% Creating the graph Laplacian: Making the DEG matrix
 %extrapolate a degree matrix
 deg = zeros(n);
 for row = 1:n
     deg(row, row) = sum(adj(row,:));
 end
-%create the graph laplacian
+% ============= create the GRAPH LAPLACIAN ================
 L = deg-adj;
 
 %% Start with a random initial condition
@@ -51,8 +51,9 @@ e = fireVector(C_0, L);
 % C_1 = C_0-L'*e
 counter = 1;
 while counter < 500
-    C_0(1) = 0; %making the first node's chips number 0
+    C_0(1) = 0; %making the first node's chips count 0
     C_1 = C_0-L'*e;
+    disp(['fire vector: ' num2str(counter)])
     e = fireVector(C_0, L);
     if C_1 == C_0
         break
@@ -79,7 +80,9 @@ L = graph_Laplacian(grid_plane);
 % C_0 = randi(8,length(grid_plane),1);
 % e = fireVector(C_0, L);
 
-%% Making a proper initial condition
+%% Making a proper initial condition: Distribution of chips on the grid
+% distribute number of chips like a pile of sand
+% 3D normal distribution?
 n = length(grid_plane);
 C_0 = round(10*randn(n,1)+n/2);
 %% Run simulation
@@ -90,15 +93,16 @@ colors = colorNodes(e);
 h = figure;
 g = graph(grid_plane);
 p = plot(g,'NodeColor',colors);
-%%
+
 hold on
 % updateGrid(h,e);
 counter = 1;
+p.LineStyle = ':';
 while counter < 101
     colors = colorNodes(C_0);
     p.NodeColor = colors;
     p.EdgeColor = [0 1 0];
-    p.LineStyle = ':';
+    
     %making the first node's chips number 0
     C_0(1) = 0; %the sink
     
@@ -110,7 +114,7 @@ while counter < 101
     C_0 = C_1;
     disp(counter);
     counter = counter+1;
-%     pause(1)
+    pause(0.2)
 end
 
 hold off
